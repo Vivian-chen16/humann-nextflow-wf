@@ -10,14 +10,6 @@ nextflow.enable.dsl = 2
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    GENOME PARAMETER VALUES
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*/
-
-params.fasta = WorkflowMain.getGenomeAttribute(params, 'fasta')
-
-/*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     VALIDATE & PRINT PARAMETER SUMMARY
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
@@ -30,13 +22,13 @@ WorkflowMain.initialise(workflow, params, log)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { HUMANN } from './workflows/humann'
+include { HUMANN_MAIN } from './workflows/humann_main'
 
 //
 // WORKFLOW: Run main vedanta-nextflow/humann analysis pipeline
 //
-workflow VEDANTANEXTFLOW_HUMANN {
-    HUMANN ()
+workflow VEDANTA_NEXTFLOW_HUMANN {
+    HUMANN_MAIN ()
 }
 
 /*
@@ -50,7 +42,7 @@ workflow VEDANTANEXTFLOW_HUMANN {
 // See: https://github.com/nf-core/rnaseq/issues/619
 //
 workflow {
-    VEDANTANEXTFLOW_HUMANN ()
+    VEDANTA_NEXTFLOW_HUMANN ()
 }
 
 /*

@@ -11,7 +11,7 @@ WorkflowHumann.initialise(params, log)
 
 // TODO nf-core: Add all file path parameters for the pipeline to the list below
 // Check input path parameters to see if they exist
-def checkPathParamList = [ params.input, params.multiqc_config, params.fasta ]
+def checkPathParamList = [ params.input, params.multiqc_config, params.uniref_db ]
 for (param in checkPathParamList) { if (param) { file(param, checkIfExists: true) } }
 
 // Check mandatory parameters
@@ -35,9 +35,10 @@ ch_multiqc_custom_methods_description = params.multiqc_methods_description ? fil
 */
 
 //
-// SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
+// SUBWORKFLOW
 //
-include { INPUT_CHECK } from '../subworkflows/local/input_check'
+include { INPUT_CHECK   } from '../subworkflows/local/input_check'
+// include { PROCESS_READS } from '../subworkflows/local/process_reads'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -46,8 +47,9 @@ include { INPUT_CHECK } from '../subworkflows/local/input_check'
 */
 
 //
-// MODULE: Installed directly from nf-core/modules
+// MODULE
 //
+include { HUMANN                      } from '../modules/local/humann'
 include { FASTQC                      } from '../modules/nf-core/fastqc/main'
 include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
 include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
@@ -61,7 +63,7 @@ include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoft
 // Info required for completion email and summary
 def multiqc_report = []
 
-workflow HUMANN {
+workflow HUMANN_MAIN {
 
     ch_versions = Channel.empty()
 
@@ -84,6 +86,23 @@ workflow HUMANN {
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
     )
+
+    //
+    // MODULE: Run HUMAnN
+    //
+    
+    // Create channels for reference database
+    if (params.uniref_db) {
+        ch_uniref_db = file(params.uniref_db, checkIfExists: true)
+    }
+    
+    HUMANN (
+        INPUT_CHECK.out.reads,
+        ch_uniref_db
+    )
+    ch_versions = ch_versions.mix(HUMANN.out.versions.first())
+
+
 
     //
     // MODULE: MultiQC
