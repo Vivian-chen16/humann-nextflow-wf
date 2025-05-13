@@ -9,9 +9,8 @@ def summary_params = NfcoreSchema.paramsSummaryMap(workflow, params)
 // Validate input parameters
 WorkflowHumann.initialise(params, log)
 
-// TODO nf-core: Add all file path parameters for the pipeline to the list below
 // Check input path parameters to see if they exist
-def checkPathParamList = [ params.input, params.multiqc_config, params.uniref_db ]
+def checkPathParamList = [ params.input, params.multiqc_config, params.uniref_db, params.mpa_db ]
 for (param in checkPathParamList) { if (param) { file(param, checkIfExists: true) } }
 
 // Check mandatory parameters
@@ -90,15 +89,19 @@ workflow HUMANN_MAIN {
     //
     // MODULE: Run HUMAnN
     //
-    
+
     // Create channels for reference database
     if (params.uniref_db) {
         ch_uniref_db = file(params.uniref_db, checkIfExists: true)
     }
-    
+    if (params.mpa_db) {
+        ch_mpa_db = file(params.mpa_db, checkIfExists: true)
+    }
+
     HUMANN (
         INPUT_CHECK.out.reads,
-        ch_uniref_db
+        ch_uniref_db,
+        mpa_db
     )
     ch_versions = ch_versions.mix(HUMANN.out.versions.first())
 
