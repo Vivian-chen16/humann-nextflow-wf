@@ -101,7 +101,7 @@ workflow HUMANN_MAIN {
     HUMANN (
         INPUT_CHECK.out.reads,
         ch_uniref_db,
-        mpa_db
+        ch_mpa_db
     )
     ch_versions = ch_versions.mix(HUMANN.out.versions.first())
 
