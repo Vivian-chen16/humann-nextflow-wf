@@ -11,7 +11,7 @@ process HUMANN {
     input:
     tuple val(meta), path(reads)
     path uniref_db
-    path mpa_db
+    path nucl_db
 
     output:
     tuple val(meta), path("${prefix}_genefamilies.tsv")    , emit: gene_family
@@ -36,7 +36,8 @@ process HUMANN {
             --input $read2 \\
             --input-format fastq.gz \\
             --output ${prefix} \\
-            --nucleotide-database $mpa_db \\
+            --search-mode uniref90 \\
+            --nucleotide-database $nucl_db \\
             --protein-database $uniref_db \\
             --threads $task.cpus
 
@@ -53,7 +54,8 @@ process HUMANN {
             --input $reads \\
             --input-format fastq.gz \\
             --output ${prefix} \\
-            --nucleotide-database $mpa_db \\
+            --search-mode uniref90 \\
+            --nucleotide-database $nucl_db \\
             --protein-database $uniref_db \\
             --threads $task.cpus
 

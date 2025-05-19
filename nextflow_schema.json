@@ -249,9 +249,9 @@
             "default": "s3://vedantabio/databases/humann3/uniref/uniref90_201901b_full.dmnd",
             "description": "Path of protein database (DIAMOND format) to annotate for"
         },
-        "mpa_db": {
+        "nucl_db": {
             "type": "string",
-            "default": "s3://vedantabio/databases/metaphlan/mpa_vJun23_CHOCOPhlAnSGB_202403/",
+            "default": "s3://vedantabio/databases/humann3/chocophlan/",
             "description": "Path of nucleotide database to annotate for"
         }
     }
