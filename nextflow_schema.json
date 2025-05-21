@@ -246,13 +246,18 @@
     "properties": {
         "uniref_db": {
             "type": "string",
-            "default": "s3://vedantabio/databases/humann3/uniref/uniref90_201901b_full.dmnd",
+            "default": "s3://vedantabio/databases/humann3/2025-05/protein/",
             "description": "Path of protein database (DIAMOND format) to annotate for"
         },
-        "nucl_db": {
+        "chocophlan_db": {
             "type": "string",
-            "default": "s3://vedantabio/databases/humann3/chocophlan/",
+            "default": "s3://vedantabio/databases/humann3/2025-05/nucleotide/",
             "description": "Path of nucleotide database to annotate for"
+        },
+        "mapping_db": {
+            "type": "string",
+            "default": "s3://vedantabio/databases/humann3/2025-05/utility_mapping/",
+            "description": "Files to convert between taxons."
         }
     }
 }

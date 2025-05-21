@@ -11,7 +11,8 @@ process HUMANN {
     input:
     tuple val(meta), path(reads)
     path uniref_db
-    path nucl_db
+    path chocophlan_db
+    path mapping_db
 
     output:
     tuple val(meta), path("${prefix}_genefamilies.tsv")    , emit: gene_family
@@ -31,13 +32,17 @@ process HUMANN {
         read2 = "${reads[1]}"
 
         """
+        humann_config --update database_folders nucleotide $chocophlan_db
+        humann_config --update database_folders protein $uniref_db
+        humann_config --update database_folders utility_mapping $mapping_db
+
         humann \\
             --input $read1 \\
             --input $read2 \\
             --input-format fastq.gz \\
             --output ${prefix} \\
             --search-mode uniref90 \\
-            --nucleotide-database $nucl_db \\
+            --nucleotide-database $chocophlan_db \\
             --protein-database $uniref_db \\
             --threads $task.cpus
 
@@ -50,12 +55,16 @@ process HUMANN {
 
     } else {
         """
+        humann_config --update database_folders nucleotide $chocophlan_db
+        humann_config --update database_folders protein $uniref_db
+        humann_config --update database_folders utility_mapping $mapping_db
+
         humann \\
             --input $reads \\
             --input-format fastq.gz \\
             --output ${prefix} \\
             --search-mode uniref90 \\
-            --nucleotide-database $nucl_db \\
+            --nucleotide-database $chocophlan_db \\
             --protein-database $uniref_db \\
             --threads $task.cpus
 
