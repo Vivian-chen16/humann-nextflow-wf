@@ -42,8 +42,6 @@ process HUMANN {
             --input-format fastq.gz \\
             --output ${prefix} \\
             --search-mode uniref90 \\
-            --nucleotide-database $chocophlan_db \\
-            --protein-database $uniref_db \\
             --threads $task.cpus
 
 
@@ -64,8 +62,6 @@ process HUMANN {
             --input-format fastq.gz \\
             --output ${prefix} \\
             --search-mode uniref90 \\
-            --nucleotide-database $chocophlan_db \\
-            --protein-database $uniref_db \\
             --threads $task.cpus
 
 
