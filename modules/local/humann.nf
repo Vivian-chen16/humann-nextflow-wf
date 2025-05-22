@@ -41,7 +41,9 @@ process HUMANN {
             --input $read2 \\
             --input-format fastq.gz \\
             --output ${prefix} \\
+            --output-basename ${prefix} \\
             --search-mode uniref90 \\
+            --pathways metacyc \\
             --threads $task.cpus
 
 
@@ -61,7 +63,9 @@ process HUMANN {
             --input $reads \\
             --input-format fastq.gz \\
             --output ${prefix} \\
+            --output-basename ${prefix} \\
             --search-mode uniref90 \\
+            --pathways metacyc \\
             --threads $task.cpus
 
 
