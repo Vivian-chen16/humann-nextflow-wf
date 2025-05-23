@@ -258,6 +258,11 @@
             "type": "string",
             "default": "s3://vedantabio/databases/humann3/2025-05/utility_mapping/",
             "description": "Files to convert between taxons."
+        },
+        "metaphlan_db": {
+            "type": "string",
+            "default": "s3://vedantabio/databases/metaphlan/mpa_vJun23_CHOCOPhlAnSGB_202403/",
+            "description": "Metaphlan marker database contains Bowtie index files."
         }
     }
 }
