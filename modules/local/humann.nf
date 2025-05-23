@@ -33,7 +33,7 @@ process HUMANN {
         read2 = "${reads[1]}"
 
         """
-        index = $(basename "$metaphlan_db")
+        index=$(basename "$metaphlan_db")
         humann_config --update database_folders nucleotide $chocophlan_db
         humann_config --update database_folders protein $uniref_db
         humann_config --update database_folders utility_mapping $mapping_db
@@ -59,7 +59,7 @@ process HUMANN {
     } else {
 
         """
-        index = $(basename "$metaphlan_db")
+        index=$(basename "$metaphlan_db")
         humann_config --update database_folders nucleotide $chocophlan_db
         humann_config --update database_folders protein $uniref_db
         humann_config --update database_folders utility_mapping $mapping_db
