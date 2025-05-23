@@ -14,6 +14,7 @@ process HUMANN {
     path chocophlan_db
     path mapping_db
     path metaphlan_db
+    val metaphlan_db_index
 
     output:
     tuple val(meta), path("${prefix}_genefamilies.tsv")    , emit: gene_family
@@ -33,7 +34,6 @@ process HUMANN {
         read2 = "${reads[1]}"
 
         """
-        index=$(basename "$metaphlan_db")
         humann_config --update database_folders nucleotide $chocophlan_db
         humann_config --update database_folders protein $uniref_db
         humann_config --update database_folders utility_mapping $mapping_db
@@ -46,7 +46,7 @@ process HUMANN {
             --output-basename ${prefix} \\
             --search-mode uniref90 \\
             --pathways metacyc \\
-            --metaphlan-options "--bowtie2db $metaphlan_db --index $index" \\
+            --metaphlan-options "--bowtie2db $metaphlan_db --index $metaphlan_db_index" \\
             --threads $task.cpus
 
 
@@ -59,7 +59,6 @@ process HUMANN {
     } else {
 
         """
-        index=$(basename "$metaphlan_db")
         humann_config --update database_folders nucleotide $chocophlan_db
         humann_config --update database_folders protein $uniref_db
         humann_config --update database_folders utility_mapping $mapping_db
@@ -71,7 +70,7 @@ process HUMANN {
             --output-basename ${prefix} \\
             --search-mode uniref90 \\
             --pathways metacyc \\
-            --metaphlan-options "--bowtie2db $metaphlan_db --index $index" \\
+            --metaphlan-options "--bowtie2db $metaphlan_db --index $metaphlan_db_index" \\
             --threads $task.cpus
 
 

@@ -263,6 +263,11 @@
             "type": "string",
             "default": "s3://vedantabio/databases/metaphlan/mpa_vJun23_CHOCOPhlAnSGB_202403/",
             "description": "Metaphlan marker database contains Bowtie index files."
+        },
+        "metaphlan_db_index": {
+            "type": "string",
+            "default": "mpa_vJun23_CHOCOPhlAnSGB_202403",
+            "description": "Version index for Metaphlan to look for."
         }
     }
 }
