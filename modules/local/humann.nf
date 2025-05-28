@@ -8,6 +8,11 @@ process HUMANN {
         'https://depot.galaxyproject.org/singularity/humann:3.9--py312hdfd78af_0':
         'biocontainers/humann:3.9--py312hdfd78af_0' }"
 
+    environment {
+        // suppress the Python 3.12 invalid‐escape warnings
+        PYTHONWARNINGS = "ignore::SyntaxWarning"
+        }
+
     input:
     tuple val(meta), path(reads)
     path uniref_db

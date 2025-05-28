@@ -10,7 +10,7 @@ def summary_params = NfcoreSchema.paramsSummaryMap(workflow, params)
 WorkflowHumann.initialise(params, log)
 
 // Check input path parameters to see if they exist
-def checkPathParamList = [ params.input, params.multiqc_config, params.uniref_db, params.chocophlan_db, params.mapping_db,  params.metaphlan_db, params.metaphlan_db_index]
+def checkPathParamList = [ params.input, params.multiqc_config, params.uniref_db, params.chocophlan_db, params.mapping_db,  params.metaphlan_db]
 for (param in checkPathParamList) { if (param) { file(param, checkIfExists: true) } }
 
 // Check mandatory parameters
