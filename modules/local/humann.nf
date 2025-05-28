@@ -20,7 +20,7 @@ process HUMANN {
     tuple val(meta), path("*_genefamilies.tsv")    , emit: gene_family
     tuple val(meta), path("*_pathabundance.tsv")   , emit: path_abundance
     tuple val(meta), path("*_pathcoverage.tsv")    , emit: path_coverage
-    path "versions.yml"                                    , emit: versions
+    path "versions.yml"                            , emit: versions
 
     when:
     task.ext.when == null || task.ext.when

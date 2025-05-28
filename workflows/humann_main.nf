@@ -37,7 +37,6 @@ ch_multiqc_custom_methods_description = params.multiqc_methods_description ? fil
 // SUBWORKFLOW
 //
 include { INPUT_CHECK   } from '../subworkflows/local/input_check'
-// include { PROCESS_READS } from '../subworkflows/local/process_reads'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -48,6 +47,7 @@ include { INPUT_CHECK   } from '../subworkflows/local/input_check'
 //
 // MODULE
 //
+include { JOIN_TABLES                 } from './modules/local/join_tables'
 include { HUMANN                      } from '../modules/local/humann'
 include { FASTQC                      } from '../modules/nf-core/fastqc/main'
 include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
@@ -90,7 +90,7 @@ workflow HUMANN_MAIN {
     // MODULE: Run HUMAnN
     //
 
-    // Create channels for reference database
+    /* Reference DB channels */
     if (params.uniref_db) {
         ch_uniref_db = file(params.uniref_db, checkIfExists: true)
     }
@@ -114,6 +114,15 @@ workflow HUMANN_MAIN {
     )
     ch_versions = ch_versions.mix(HUMANN.out.versions.first())
 
+
+    //
+    // MODULE: Join tables
+    //
+    JOIN_TABLES(
+        HUMANN.out.gene_family.map{it[1]}.collect(),
+        HUMANN.out.path_abundance.map{it[1]}.collect(),
+        HUMANN.out.path_coverage.map{it[1]}.collect()
+        )
 
 
     //
