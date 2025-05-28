@@ -8,11 +8,6 @@ process HUMANN {
         'https://depot.galaxyproject.org/singularity/humann:3.9--py312hdfd78af_0':
         'biocontainers/humann:3.9--py312hdfd78af_0' }"
 
-    environment {
-        // suppress the Python 3.12 invalid‐escape warnings
-        PYTHONWARNINGS = "ignore::SyntaxWarning"
-        }
-
     input:
     tuple val(meta), path(reads)
     path uniref_db
@@ -39,6 +34,7 @@ process HUMANN {
         read2 = "${reads[1]}"
 
         """
+        export PYTHONWARNINGS="ignore::SyntaxWarning"
         humann_config --update database_folders nucleotide $chocophlan_db
         humann_config --update database_folders protein $uniref_db
         humann_config --update database_folders utility_mapping $mapping_db
@@ -64,6 +60,7 @@ process HUMANN {
     } else {
 
         """
+        export PYTHONWARNINGS="ignore::SyntaxWarning"
         humann_config --update database_folders nucleotide $chocophlan_db
         humann_config --update database_folders protein $uniref_db
         humann_config --update database_folders utility_mapping $mapping_db
