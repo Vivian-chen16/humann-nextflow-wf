@@ -17,9 +17,9 @@ process HUMANN {
     val metaphlan_db_index
 
     output:
-    tuple val(meta), path("${prefix}_genefamilies.tsv")    , emit: gene_family
-    tuple val(meta), path("${prefix}_pathabundance.tsv")   , emit: path_abundance
-    tuple val(meta), path("${prefix}_pathcoverage.tsv")    , emit: path_coverage
+    tuple val(meta), path("*_genefamilies.tsv")    , emit: gene_family
+    tuple val(meta), path("*_pathabundance.tsv")   , emit: path_abundance
+    tuple val(meta), path("*_pathcoverage.tsv")    , emit: path_coverage
     path "versions.yml"                                    , emit: versions
 
     when:
