@@ -1,7 +1,7 @@
 
 process HUMANN {
     tag "$meta.id"
-    label 'process_high'
+    label 'process_medium'
 
     conda "bioconda::humann=3.9"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
@@ -17,10 +17,10 @@ process HUMANN {
     val metaphlan_db_index
 
     output:
-    tuple val(meta), path("*_genefamilies.tsv")    , emit: gene_family
-    tuple val(meta), path("*_pathabundance.tsv")   , emit: path_abundance
-    tuple val(meta), path("*_pathcoverage.tsv")    , emit: path_coverage
-    path "versions.yml"                            , emit: versions
+    tuple val(meta), path("${meta.id}/${meta.id}_genefamilies.tsv")    , emit: gene_family
+    tuple val(meta), path("${meta.id}/${meta.id}_pathabundance.tsv")   , emit: path_abundance
+    tuple val(meta), path("${meta.id}/${meta.id}_pathcoverage.tsv")    , emit: path_coverage
+    path "versions.yml"                                                , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -43,7 +43,7 @@ process HUMANN {
             --input $read1 \\
             --input $read2 \\
             --input-format fastq.gz \\
-            --output ${prefix} \\
+            --output ./ \\
             --output-basename ${prefix} \\
             --search-mode uniref90 \\
             --pathways metacyc \\
@@ -68,7 +68,7 @@ process HUMANN {
         humann \\
             --input $reads \\
             --input-format fastq.gz \\
-            --output ${prefix} \\
+            --output ./ \\
             --output-basename ${prefix} \\
             --search-mode uniref90 \\
             --pathways metacyc \\

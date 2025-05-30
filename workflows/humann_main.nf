@@ -47,7 +47,7 @@ include { INPUT_CHECK   } from '../subworkflows/local/input_check'
 //
 // MODULE
 //
-include { JOIN_TABLES                 } from './modules/local/join_tables'
+include { JOIN_TABLES                 } from '../modules/local/join_tables'
 include { HUMANN                      } from '../modules/local/humann'
 include { FASTQC                      } from '../modules/nf-core/fastqc/main'
 include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
