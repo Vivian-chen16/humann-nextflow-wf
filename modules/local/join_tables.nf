@@ -1,6 +1,6 @@
 
 process JOIN_TABLES {
-    tag "$meta.id"
+    //tag "$meta.id"
     label 'process_medium'
 
     conda "bioconda::humann=3.9"
