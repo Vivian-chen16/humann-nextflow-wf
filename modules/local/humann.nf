@@ -34,14 +34,15 @@ process HUMANN {
         read2 = "${reads[1]}"
 
         """
+        cat $read1 $read2 > merged.fastq.gz
+
         export PYTHONWARNINGS="ignore::SyntaxWarning"
         humann_config --update database_folders nucleotide $chocophlan_db
         humann_config --update database_folders protein $uniref_db
         humann_config --update database_folders utility_mapping $mapping_db
 
         humann \\
-            --input $read1 \\
-            --input $read2 \\
+            --input merged.fastq.gz \\
             --input-format fastq.gz \\
             --output ./ \\
             --output-basename ${prefix} \\
